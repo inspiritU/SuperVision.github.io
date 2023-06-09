@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="../css/地图.css"/>
+    <style>
+        html, body, #container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .amap-icon img,
+        .amap-marker-content img{
+            width: 25px;
+            height: 34px;
+        }
+
+        .marker {
+            position: absolute;
+            top: -20px;
+            right: -118px;
+            color: #fff;
+            padding: 4px 10px;
+            box-shadow: 1px 1px 1px rgba(10, 10, 10, .2);
+            white-space: nowrap;
+            font-size: 12px;
+            font-family: "";
+            background-color: #25A5F7;
+            border-radius: 3px;
+        }
+
+        .input-card{
+            width: 19rem;
+            z-index: 170;
+        }
+
+        .input-card .btn{
+            margin-right: .8rem;
+        }
+
+        .input-card .btn:last-child{
+            margin-right: 0;
+        }
+        .toggle--push .toggle--btn {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #f9f8f6;
+            border-radius: 50%;
+            box-shadow: 0 5px 10px 0px #333, 0 15px 20px 0px #cccccc;
+        }
+        .toggle--push .toggle--btn, .toggle--push .toggle--btn:before, .toggle--push .toggle--btn:after {
+            transition-duration: 150ms;
+        }
+        .toggle--push .toggle--btn:before {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 22.72727px;
+            height: 22.72727px;
+            border-radius: 50%;
+            background-color: #FF9900;
+            box-shadow: inset 0 0 0 5px #ccc, inset 0 0 0 14px #f9f8f6;
+        }
+        .toggle--push .toggle--btn:after {
+            position: absolute;
+            left: 50%;
+            top: 35%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 12px;
+            background-color: #ccc;
+            box-shadow: 0 0 0 2.5px #f9f8f6;
+        }
+        .toggle--push .toggle--btn:hover:before {
+            box-shadow: inset 0 0 0 5px #b3b3b3, inset 0 0 0 14px #f9f8f6;
+        }
+        .toggle--push .toggle--btn:hover:after {
+            background-color: #b3b3b3;
+        }
+        .toggle--push .toggle--checkbox:checked + .toggle--btn {
+            box-shadow: 0 2px 5px 0px gray, 0 15px 20px 0px transparent;
+        }
+        .toggle--push .toggle--checkbox:checked + .toggle--btn:before {
+            box-shadow: inset 0 0 0 5px #FF9900, inset 0 0 0 14px #f9f8f6;
+        }
+        .toggle--push .toggle--checkbox:checked + .toggle--btn:after {
+            background-color: #FF9900;
+        }
+
+    </style>
+    <title>Marker example</title>
+    <link rel="icon" href="../../../images/交通学院logo.png">
+
+    <title>停放管理</title>
+
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="../../../assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Bootstrap extend-->
+    <link rel="stylesheet" href="../../css/bootstrap-extend.css">
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="../../../assets/vendor_components/bootstrap-switch/switch.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../css/master_style.css">
+
+    <!-- Fab Admin skins -->
+    <link rel="stylesheet" href="../../css/skins/_all-skins.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<div id="container" tabindex="0"></div>
+<script src="../js/parkinglot.js"></script>
+<script src="https://webapi.amap.com/maps?v=1.4.14&key=017c28dbcffb21ab5f3acf8cfa3e60f8"></script>
+<div class="input-card">
+    <label style="color:grey">停放点独立开闭管理</label>
+
+    <div class="input-item">
+
+        <input id="clearMarker" type="button" class="btn" onclick="kaibi1()"  value="1区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi2()" value="2区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi3()"  value="3区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi4()"  value="4区">
+    </div>
+    <div class="input-item">
+        <input id="clearMarker" type="button" class="btn" onclick="kaibi5()" value="5区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi6()" value="6区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi7()" value="7区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi8()"  value="8区">
+    </div>
+    <div class="input-item">
+        <input id="clearMarker" type="button" class="btn" onclick="kaibi9()" value="9区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi10()"  value="10区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi11()"  value="11区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi12()" value="12区">
+    </div>
+    <div class="input-item">
+        <input id="clearMarker" type="button" class="btn" onclick="kaibi13()"  value="13区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi14()" value="14区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi15()"  value="15区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi16()"  value="16区">
+    </div>
+    <div class="input-item">
+        <input id="clearMarker" type="button" class="btn" onclick="kaibi17()"  value="17区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi18()"  value="18区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi19()"  value="19区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi20()" value="20区">
+    </div>
+    <div class="input-item">
+        <input id="clearMarker" type="button" class="btn" onclick="kaibi21()" value="21区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi22()"  value="22区">
+        <input id="updateMarker" type="button" class="btn" onclick="kaibi23()"  value="23区">
+
+    </div>
+
+</div>
+<script type="text/javascript">
+
+    var map = new AMap.Map('container',{features: ['bg', 'road'],
+        mapStyle: 'amap://styles/normal',
+        center: [116.483,39.8742],
+        pitch: 50,
+        zoom: 16.9,});
+    var markers = []; //province见Demo引用的JS文件
+    for (var i = 0; i < provinces.length; i += 1) {
+        var marker;
+        if (provinces[i].type == 0) {
+
+            marker = new AMap.Marker({
+                icon: '../js/jintai.png',
+                position: provinces[i].center.split(','),
+                title: provinces[i].name,
+                map: map,
+            });
+        }
+
+
+        markers.push(marker);
+    }
+    map.setFitView();
+
+    var x1=0;
+    function kaibi1() {
+        x1 += 1;
+        if (x1 % 2 == 1) {
+
+                marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                    position: [116.476924,39.877601],
+
+                });
+                marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.476919,39.877552],
+
+            });
+            marker2.setMap(map);
+            marker3 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.476924,39.877177],
+
+            });
+            marker3.setMap(map);
+            marker4 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.476903,39.877288],
+
+            });
+            marker4.setMap(map);
+            marker5 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.476919,39.877358],
+
+            });
+            marker5.setMap(map);
+            marker6 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.476924,39.87744],
+
+            });
+            marker6.setMap(map);
+
+        }
+        if (x1 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+            if (marker3) {
+                marker3.setMap(null);
+                marker3 = null;
+            }
+            if (marker4) {
+                marker4.setMap(null);
+                marker4 = null;
+            }
+            if (marker5) {
+                marker5.setMap(null);
+                marker5 = null;
+            }
+            if (marker6) {
+                marker6.setMap(null);
+                marker6 = null;
+            }
+        }
+    }
+    x2=0;
+    function kaibi2() {
+        x2 += 1;
+        if (x2 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.47855,39.877844],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.477584,39.877346],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x2 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+    x3=0;
+    function kaibi3() {
+        x3 += 1;
+        if (x3 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.479333,39.878737],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.479333,39.878737],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x3 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+    x4=0;
+    function kaibi4() {
+        x4 += 1;
+        if (x4 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.479847,39.878587],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.480002,39.878587],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x4 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+    x5=0;
+    function kaibi5() {
+        x5 += 1;
+        if (x5 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.481569,39.87907],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.482524,39.878485],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x5 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+
+    x6=0;
+    function kaibi6() {
+        x6 += 1;
+        if (x6 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.480531,39.877791],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.480644,39.877425],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x6 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+
+    x7=0;
+    function kaibi7() {
+        x7 += 1;
+        if (x7 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.481868,39.87665],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.481868,39.87665],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x7 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+    x8=0;
+    function kaibi8() {
+        x8 += 1;
+        if (x8 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.477828,39.874956],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.477813,39.874821],
+
+            });
+            marker2.setMap(map);
+            marker3 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.477797,39.874414],
+
+            });
+            marker3.setMap(map);
+        }
+        if (x8 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+            if (marker3) {
+                marker3.setMap(null);
+                marker3 = null;
+            }
+        }
+    }
+    x9=0;
+    function kaibi9() {
+        x9 += 1;
+        if (x9 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.478065,39.875229],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.478087,39.87436],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x9 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+    x10=0;
+    function kaibi10() {
+        x10 += 1;
+        if (x10 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.478619,39.87329],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.478716,39.872619],
+
+            });
+            marker2.setMap(map);
+        }
+        if (x10 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+        }
+    }
+    x11=0;
+    function kaibi11() {
+        x11 += 1;
+        if (x11 % 2 == 1) {
+
+            marker1 = new AMap.Marker({ icon: '../js/dongtai.png',
+                position: [116.480756,39.876152],
+
+            });
+            marker1.setMap(map);
+            marker2 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.480756,39.876152],
+
+            });
+            marker2.setMap(map);
+            marker3 = new AMap.Marker({ icon:'../js/dongtai.png',
+                position: [116.48097,39.875263],
+
+            });
+            marker3.setMap(map);
+        }
+        if (x11 % 2 == 0) {
+
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            if (marker2) {
+                marker2.setMap(null);
+                marker2 = null;
+            }
+            if (marker3) {
+                marker3.setMap(null);
+                marker3 = null;
+            }
+        }
+    }
+
+    AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],function(){
+        map.addControl(new AMap.ToolBar());
+        map.addControl(new AMap.Scale());
+
+    })
+
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+</body>
+</html>

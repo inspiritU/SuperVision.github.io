@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="../../../images/交通学院logo.png">
+
+    <title>停放管理</title>
+  
+	<!-- Bootstrap 4.0-->
+	<link rel="stylesheet" href="../../../assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
+	
+	<!-- Bootstrap extend-->
+	<link rel="stylesheet" href="../../css/bootstrap-extend.css">
+  <!-- Bootstrap 4.0-->
+  <link rel="stylesheet" href="../../../assets/vendor_components/bootstrap-switch/switch.css">
+
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../../css/master_style.css">
+
+	<!-- Fab Admin skins -->
+	<link rel="stylesheet" href="../../css/skins/_all-skins.css">
+
+  <link rel="stylesheet" href="dist/jBox.all.css">
+  <link rel="stylesheet" href="css/Demo.css">
+
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+  <link rel="stylesheet" href="../../css/地图.css"/>
+  <style>
+    html, body, #container {
+      height: 100%;
+      width: 100%;
+    }
+
+    .amap-icon img,
+    .amap-marker-content img{
+      width: 25px;
+      height: 34px;
+    }
+
+    .marker {
+      position: absolute;
+      top: -20px;
+      right: -118px;
+      color: #fff;
+      padding: 4px 10px;
+      box-shadow: 1px 1px 1px rgba(10, 10, 10, .2);
+      white-space: nowrap;
+      font-size: 12px;
+      font-family: "";
+      background-color: #25A5F7;
+      border-radius: 3px;
+    }
+
+    .input-card{
+      width: 19rem;
+      z-index: 170;
+    }
+
+    .input-card .btn{
+      margin-right: .8rem;
+    }
+
+    .input-card .btn:last-child{
+      margin-right: 0;
+    }
+    .toggle--push .toggle--btn {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      background-color: #f9f8f6;
+      border-radius: 50%;
+      box-shadow: 0 5px 10px 0px #333, 0 15px 20px 0px #cccccc;
+    }
+    .toggle--push .toggle--btn, .toggle--push .toggle--btn:before, .toggle--push .toggle--btn:after {
+      transition-duration: 150ms;
+    }
+    .toggle--push .toggle--btn:before {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 22.72727px;
+      height: 22.72727px;
+      border-radius: 50%;
+      background-color: #FF9900;
+      box-shadow: inset 0 0 0 5px #ccc, inset 0 0 0 14px #f9f8f6;
+    }
+    .toggle--push .toggle--btn:after {
+      position: absolute;
+      left: 50%;
+      top: 35%;
+      transform: translate(-50%, -50%);
+      width: 4px;
+      height: 12px;
+      background-color: #ccc;
+      box-shadow: 0 0 0 2.5px #f9f8f6;
+    }
+    .toggle--push .toggle--btn:hover:before {
+      box-shadow: inset 0 0 0 5px #b3b3b3, inset 0 0 0 14px #f9f8f6;
+    }
+    .toggle--push .toggle--btn:hover:after {
+      background-color: #b3b3b3;
+    }
+    .toggle--push .toggle--checkbox:checked + .toggle--btn {
+      box-shadow: 0 2px 5px 0px gray, 0 15px 20px 0px transparent;
+    }
+    .toggle--push .toggle--checkbox:checked + .toggle--btn:before {
+      box-shadow: inset 0 0 0 5px #FF9900, inset 0 0 0 14px #f9f8f6;
+    }
+    .toggle--push .toggle--checkbox:checked + .toggle--btn:after {
+      background-color: #FF9900;
+    }
+
+  </style>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="../../index.html" class="logo">
+      <!-- mini logo -->
+	  <b class="logo-mini">
+		  <span class="light-logo"><img src="../../../images/bjut.png" alt="logo"></span>
+		  <!--<span class="dark-logo"><img src="../../../images/bjut.png" alt="logo"></span>-->
+	  </b>
+      <!-- logo-->
+      <span class="logo-lg">
+		  <img src="../../../images/bjut.png.png" alt="logo" class="light-logo">
+	  	  <img src="../../../images/bjut.png" alt="logo" class="dark-logo">
+	  </span>
+    </a>
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+	  <div>
+		  <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+			<span class="sr-only">Toggle navigation</span>
+		  </a>
+
+		  <div class="btn-group d-none d-lg-inline-block mt-5">
+			 <button class="btn dropdown-toggle mr-10 btn-outline btn-white" type="button" data-toggle="dropdown">Dashboard</button>
+			 <div class="dropdown-menu">
+				<a class="dropdown-item" href="http://html-templates.multipurposethemes.com/bootstrap-4/admin/fab-admin/src/"><i class="fa fa-dashboard w-30"></i>Main Dashboard</a>
+				<a class="dropdown-item" href="http://html-templates.multipurposethemes.com/bootstrap-4/admin/fab-admin/ecommerce-dashboard/"><i class="fa fa-shopping-basket w-30"></i>eCommerce Dashboard</a>
+				<a class="dropdown-item" href="http://html-templates.multipurposethemes.com/bootstrap-4/admin/fab-admin/hospital-dashboard/"><i class="fa fa-heartbeat w-30"></i>Hospital Dashboard</a>
+				<a class="dropdown-item" href="http://html-templates.multipurposethemes.com/bootstrap-4/admin/fab-admin/horizontal-nav/main"><i class="fa fa-bars w-30"></i>Horizontal Nav Dashboard</a>
+				<a class="dropdown-item" href="http://html-templates.multipurposethemes.com/bootstrap-4/admin/fab-admin/horizontal-nav/real-estate-dashboard"><i class="fa fa-building w-30"></i>Real Estate Dashboard</a>
+			 </div>
+		  </div>
+	  </div>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+		  
+		  <li class="search-box">
+            <a class="nav-link hidden-sm-down" href="javascript:void(0)"><i class="mdi mdi-magnify"></i></a>
+            <form class="app-search" style="display: none;">
+                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+			</form>
+          </li>			
+		  
+          <!-- Messages -->
+          <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="mdi mdi-email"></i>
+            </a>
+            <ul class="dropdown-menu scale-up">
+              <li class="header">You have 5 messages</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu inner-content-div">
+                  <li><!-- start message -->
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="../../../images/user2-160x160.jpg" class="rounded-circle" alt="User Image">
+                      </div>
+                      <div class="mail-contnet">
+                         <h4>
+                          Lorem Ipsum
+                          <small><i class="fa fa-clock-o"></i> 15 mins</small>
+                         </h4>
+                         <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end message -->
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="../../../images/user3-128x128.jpg" class="rounded-circle" alt="User Image">
+                      </div>
+                      <div class="mail-contnet">
+                         <h4>
+                          Nullam tempor
+                          <small><i class="fa fa-clock-o"></i> 4 hours</small>
+                         </h4>
+                         <span>Curabitur facilisis erat quis metus congue viverra.</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="../../../images/user4-128x128.jpg" class="rounded-circle" alt="User Image">
+                      </div>
+                      <div class="mail-contnet">
+                         <h4>
+                          Proin venenatis
+                          <small><i class="fa fa-clock-o"></i> Today</small>
+                         </h4>
+                         <span>Vestibulum nec ligula nec quam sodales rutrum sed luctus.</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="../../../images/user3-128x128.jpg" class="rounded-circle" alt="User Image">
+                      </div>
+                      <div class="mail-contnet">
+                         <h4>
+                          Praesent suscipit
+                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                         </h4>
+                         <span>Curabitur quis risus aliquet, luctus arcu nec, venenatis neque.</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="../../../images/user4-128x128.jpg" class="rounded-circle" alt="User Image">
+                      </div>
+                      <div class="mail-contnet">
+                         <h4>
+                          Donec tempor
+                          <small><i class="fa fa-clock-o"></i> 2 days</small>
+                         </h4>
+                         <span>Praesent vitae tellus eget nibh lacinia pretium.</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="#">See all e-Mails</a></li>
+            </ul>
+          </li>
+          <!-- Notifications -->
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="mdi mdi-bell"></i>
+            </a>
+            <ul class="dropdown-menu scale-up">
+              <li class="header">You have 7 notifications</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu inner-content-div">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> Curabitur id eros quis nunc suscipit blandit.
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-warning text-yellow"></i> Duis malesuada justo eu sapien elementum, in semper diam posuere.
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-red"></i> Donec at nisi sit amet tortor commodo porttitor pretium a erat.
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-shopping-cart text-green"></i> In gravida mauris et nisi
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user text-red"></i> Praesent eu lacus in libero dictum fermentum.
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user text-red"></i> Nunc fringilla lorem 
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user text-red"></i> Nullam euismod dolor ut quam interdum, at scelerisque ipsum imperdiet.
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>
+            </ul>
+          </li>
+          <!-- Tasks-->
+          <li class="dropdown tasks-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="mdi mdi-message"></i>
+            </a>
+            <ul class="dropdown-menu scale-up">
+              <li class="header">You have 6 tasks</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu inner-content-div">
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Lorem ipsum dolor sit amet
+                        <small class="pull-right">30%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-aqua" style="width: 30%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">30% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Vestibulum nec ligula
+                        <small class="pull-right">20%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-danger" style="width: 20%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">20% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Donec id leo ut ipsum
+                        <small class="pull-right">70%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-light-blue" style="width: 70%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">70% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Praesent vitae tellus
+                        <small class="pull-right">40%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-yellow" style="width: 40%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">40% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Nam varius sapien
+                        <small class="pull-right">80%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-red" style="width: 80%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">80% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Nunc fringilla
+                        <small class="pull-right">90%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-primary" style="width: 90%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">90% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                </ul>
+              </li>
+              <li class="footer">
+                <a href="#">View all tasks</a>
+              </li>
+            </ul>
+          </li>
+		  <!-- User Account-->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="../../../images/交通学院logo.png" class="user-image rounded-circle" alt="User Image">
+            </a>
+            <ul class="dropdown-menu scale-up">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="../../../images/交通学院logo.png" class="float-left rounded-circle" alt="User Image">
+
+                <p>
+                  Juliya Brus
+                  <small class="mb-5">jb@gmail.com</small>
+                  <a href="#" class="btn btn-danger btn-sm btn-rounded">View Profile</a>
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row no-gutters">
+                  <div class="col-12 text-left">
+                    <a href="#"><i class="ion ion-person"></i> My Profile</a>
+                  </div>
+                  <div class="col-12 text-left">
+                    <a href="#"><i class="ion ion-email-unread"></i> Inbox</a>
+                  </div>
+                  <div class="col-12 text-left">
+                    <a href="#"><i class="ion ion-settings"></i> Setting</a>
+                  </div>
+				<div role="separator" class="divider col-12"></div>
+				  <div class="col-12 text-left">
+                    <a href="#"><i class="ti-settings"></i> Account Setting</a>
+                  </div>
+				<div role="separator" class="divider col-12"></div>
+				  <div class="col-12 text-left">
+                    <a href="#"><i class="fa fa-power-off"></i> Logout</a>
+                  </div>				
+                </div>
+                <!-- /.row -->
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-cog fa-spin"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar-->
+    <section class="sidebar">
+      
+      <!-- sidebar menu-->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="user-profile treeview">
+          <a href="index.html">
+			<img src="../../../images/交通学院logo.png" alt="user">
+            <span>城市交通学院</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+		  <ul class="treeview-menu">
+            <li><a href="javascript:void()"><i class="fa fa-user mr-5"></i>My Profile </a></li>
+			<li><a href="javascript:void()"><i class="fa fa-money mr-5"></i>My Balance</a></li>
+			<li><a href="javascript:void()"><i class="fa fa-envelope-open mr-5"></i>Inbox</a></li>
+			<li><a href="javascript:void()"><i class="fa fa-cog mr-5"></i>Account Setting</a></li>
+			<li><a href="javascript:void()"><i class="fa fa-power-off mr-5"></i>Logout</a></li>
+          </ul>
+        </li>
+        <li class="header nav-small-cap">菜单</li>
+        <li>
+          <a href="../../index.html">
+            <i class="fa fa-dashboard"></i> <span>首页</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="../box/advanced.html">
+            <i class="fa fa-th"></i> <span>实时监控</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
+
+
+
+        <li>
+          <a href="../widgets/chart2.html">
+            <i class="fa fa-laptop"></i>
+            <span>停放管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
+
+
+
+        <li>
+          <a href="../tables/data.html">
+            <i class="fa fa-table"></i> <span>车辆管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
+
+        <li>
+          <a href="../charts/morris.html">
+            <i class="fa fa-envelope-open-o"></i> <span>统计分析</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
+
+        <li>
+          <a href="../charts/chartjs.html">
+            <i class="fa fa-envelope-open-o"></i> <span>企业管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
+
+      </ul>
+    </section>
+  </aside>
+  <script LANGUAGE="JavaScript">
+    function fun(){
+
+      //0225
+      if(document.getElementById('date').value=='2019-02-25'&&document.getElementById('time').value=='15:00') {
+        self.location = '../停放管理/201902251500.html'
+      }
+
+
+      // 2018.04.09
+      if(document.getElementById('date').value=='2018-04-09'&&document.getElementById('time').value=='15:00') {
+        self.location = '../停放管理/201804091500.html'
+      }
+
+
+
+
+    }
+  </script>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        停放管理
+        <small>PARKING ADMINISTRATION</small>
+      </h1>
+      <ol class="breadcrumb">
+        <div class="form-group">
+          <div class="row">
+
+            <div class="col-6">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="date" class="form-control pull-right" id="date">
+              </div>
+              <!-- /.input group -->
+            </div>
+            <div class="col-6">
+              <!-- Date mm/dd/yyyy -->
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <input type="text" class="form-control" placeholder="xx：xx" id="time" >
+                <input type="button" value="查询" onclick="fun()"/>
+              </div>
+
+              <!-- /.input group -->
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li class="breadcrumb-item active">停放管理</li>
+      </ol>
+    </section>
+    <div id="container" class="contentmap"></div>
+    <script src="../../js/parkinglot.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.14&key=017c28dbcffb21ab5f3acf8cfa3e60f8"></script>
+
+    <div class="input-card">
+      <!--<label style="color:grey">停放点独立开闭管理</label>-->
+      <div class="targets-wrapper">
+        <div id="Notice-1" class="target-notice" style="width: 195px">建议开放区域</div>
+
+
+
+      </div>
+
+
+      <div class="input-item">
+
+        <input id="clearMarker1" type="button" class="btn" onclick="kaibi1()"  style="width: 40px" value="1区">
+        <input id="clearMarker2"  type="button" class="btn" onclick="kaibi2()" style="width: 40px" value="2区">
+        <input id="clearMarker3"  type="button" class="btn" onclick="kaibi3()"  style="width: 40px"  value="3区">
+        <input id="clearMarker4"  type="button" class="btn" onclick="kaibi4()" style="width: 40px"  value="4区">
+      </div>
+      <div class="input-item">
+        <input id=clearMarker5"  type="button" class="btn" onclick="kaibi5()" value="5区" style="width: 40px" >
+        <input id="clearMarker6" type="button" class="btn" onclick="kaibi6()" value="6区"style="width: 40px" >
+        <input id="clearMarker7"  type="button" class="btn" onclick="kaibi7()" value="7区"style="width: 40px" >
+        <input id="clearMarker8"  type="button" class="btn" onclick="kaibi8()"  value="8区"style="width: 40px" >
+      </div>
+      <div class="input-item">
+        <input id="clearMarker9"  type="button" class="btn" onclick="kaibi9()" value="9区"style="width: 40px" >
+        <input id="clearMarker10"  type="button" class="btn" onclick="kaibi10()"  value="10区"style="width: 40px" >
+        <input id="clearMarker11"  type="button" class="btn" onclick="kaibi11()"  value="11区"style="width: 40px" >
+        <input id="clearMarker12"  type="button" class="btn" onclick="kaibi12()" value="12区"style="width: 40px" >
+      </div>
+      <div class="input-item">
+        <input id="clearMarker13"  type="button" class="btn" onclick="kaibi13()"  value="13区"style="width: 40px" >
+        <input id="clearMarker14"  type="button" class="btn" onclick="kaibi14()" value="14区"style="width: 40px" >
+        <input id=clearMarker15"  type="button" class="btn" onclick="kaibi15()"  value="15区"style="width: 40px" >
+        <input id="clearMarker16"  type="button" class="btn" onclick="kaibi16()"  value="16区"style="width: 40px" >
+      </div>
+      <div class="input-item">
+        <input id=clearMarker17"  type="button" class="btn" onclick="kaibi17()"  value="17区"style="width: 40px" >
+        <input id="clearMarker18"  type="button" class="btn" onclick="kaibi18()"  value="18区"style="width: 40px" >
+        <input id="clearMarker19"  type="button" class="btn" onclick="kaibi19()"  value="19区"style="width: 40px" >
+        <input id="clearMarker20" type="button" class="btn" onclick="kaibi20()" value="20区"style="width: 40px" >
+      </div>
+      <div class="input-item">
+        <input id="clearMarker21"  type="button" class="btn" onclick="kaibi21()" value="21区"style="width: 40px" >
+        <input id="clearMarker22" type="button" class="btn" onclick="kaibi22()"  value="22区"style="width: 40px" >
+        <input id="clearMarker23" type="button" class="btn" onclick="kaibi23()"  value="23区"style="width: 40px" >
+        <input id="clearMarker24"  type="button" class="btn"   value="其他"style="width: 40px" >
+
+      </div>
+      <div class="input-item">
+        <input id="clearMarker" type="button" class="btn" style="width: 195px"  onclick="window.open('../widgets/chart.html','_self')" value="更多区域信息">
+
+      </div>
+
+
+    </div>
+    <script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="dist/jBox.all.js"></script>
+    <script src="js/Demo.js"></script>
+    <script src="Playground/Playground.Avatars.js"></script>
+    <script src="Playground/Playground.Login.js"></script>
+    <script type="text/javascript">
+
+      var map = new AMap.Map('container',{
+        // features: ['bg', 'road'],
+        // mapStyle: 'amap://styles/blue',
+        // center: [116.483,39.8742],
+        // pitch: 50,
+        // zoom: 16.9,
+
+                resizeEnable: true,
+                expandZoomRange:true,
+                mapStyle:'amap://styles/normal',
+                zoom:10,
+                zooms:[3,20],
+                center: [116.483,39.8742],
+
+              }
+
+        );
+      var markers = []; //province见Demo引用的JS文件
+      for (var i = 0; i < provinces.length; i += 1) {
+        var marker;
+        if (provinces[i].type == 0) {
+
+          marker = new AMap.Marker({
+            icon: '../../js/jintai.png',
+            position: provinces[i].center.split(','),
+            title: provinces[i].name,
+            map: map,
+          });
+        }
+
+
+        markers.push(marker);
+      }
+      map.setFitView();
+
+      var x1=0;
+      function kaibi1() {
+        x1 += 1;
+        if (x1 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.476924,39.877601],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.476919,39.877552],
+
+          });
+          marker2.setMap(map);
+          marker3 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.476924,39.877177],
+
+          });
+          marker3.setMap(map);
+          marker4 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.476903,39.877288],
+
+          });
+          marker4.setMap(map);
+          marker5 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.476919,39.877358],
+
+          });
+          marker5.setMap(map);
+          marker6 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.476924,39.87744],
+
+          });
+          marker6.setMap(map);
+
+        }
+        if (x1 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+          if (marker3) {
+            marker3.setMap(null);
+            marker3 = null;
+          }
+          if (marker4) {
+            marker4.setMap(null);
+            marker4 = null;
+          }
+          if (marker5) {
+            marker5.setMap(null);
+            marker5 = null;
+          }
+          if (marker6) {
+            marker6.setMap(null);
+            marker6 = null;
+          }
+        }
+      }
+      x2=0;
+      function kaibi2() {
+        x2 += 1;
+        if (x2 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.47855,39.877844],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.477584,39.877346],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x2 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+      x3=0;
+      function kaibi3() {
+        x3 += 1;
+        if (x3 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.479333,39.878737],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.479333,39.878737],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x3 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+      x4=0;
+      function kaibi4() {
+        x4 += 1;
+        if (x4 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.479847,39.878587],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.480002,39.878587],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x4 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+      x5=0;
+      function kaibi5() {
+        x5 += 1;
+        if (x5 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.481569,39.87907],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.482524,39.878485],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x5 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+
+      x6=0;
+      function kaibi6() {
+        x6 += 1;
+        if (x6 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.480531,39.877791],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.480644,39.877425],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x6 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+
+      x7=0;
+      function kaibi7() {
+        x7 += 1;
+        if (x7 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.481868,39.87665],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.481868,39.87665],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x7 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+      x8=0;
+      function kaibi8() {
+        x8 += 1;
+        if (x8 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.477828,39.874956],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.477813,39.874821],
+
+          });
+          marker2.setMap(map);
+          marker3 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.477797,39.874414],
+
+          });
+          marker3.setMap(map);
+        }
+        if (x8 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+          if (marker3) {
+            marker3.setMap(null);
+            marker3 = null;
+          }
+        }
+      }
+      x9=0;
+      function kaibi9() {
+        x9 += 1;
+        if (x9 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.478065,39.875229],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.478087,39.87436],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x9 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+      x10=0;
+      function kaibi10() {
+        x10 += 1;
+        if (x10 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.478619,39.87329],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.478716,39.872619],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x10 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+      x11=0;
+      function kaibi11() {
+        x11 += 1;
+        if (x11 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.480756,39.876152],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.480756,39.876152],
+
+          });
+          marker2.setMap(map);
+          marker3 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.48097,39.875263],
+
+          });
+          marker3.setMap(map);
+        }
+        if (x11 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+          if (marker3) {
+            marker3.setMap(null);
+            marker3 = null;
+          }
+        }
+      }
+
+
+      x12=0;
+      function kaibi12() {
+        x12 += 1;
+        if (x12 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.47988,39.876155],
+
+          });
+          marker1.setMap(map);
+
+
+        }
+        if (x12 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+
+        }
+      }
+
+
+
+      x13=0;
+      function kaibi13() {
+        x13 += 1;
+        if (x13 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.480448,39.873547],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.480443,39.873452],
+
+          });
+          marker2.setMap(map);
+          marker3 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.480439,39.873277],
+
+          });
+          marker3.setMap(map);
+        }
+        if (x13 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+          if (marker3) {
+            marker3.setMap(null);
+            marker3 = null;
+          }
+        }
+      }
+
+
+
+      x14=0;
+      function kaibi14() {
+        x14 += 1;
+        if (x14 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.480671,39.872402],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.482053,39.872383],
+
+          });
+          marker2.setMap(map);
+
+        }
+        if (x14 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+
+        }
+      }
+
+
+
+      x15=0;
+      function kaibi15() {
+        x15 += 1;
+        if (x15 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.481421,39.873284],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.481421,39.872898],
+
+          });
+          marker2.setMap(map);
+
+        }
+        if (x15 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+
+        }
+      }
+
+
+
+      x16=0;
+      function kaibi16() {
+        x16 += 1;
+        if (x16 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.480537,39.874611],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.481997,39.874941],
+
+          });
+          marker2.setMap(map);
+
+        }
+        if (x16 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+
+        }
+      }
+
+
+
+      x17=0;
+      function kaibi17() {
+        x17 += 1;
+        if (x17 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.481907,39.87369],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.482006,39.873694],
+
+          });
+          marker2.setMap(map);
+          marker3 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.480637,39.873667],
+
+          });
+          marker4.setMap(map);
+          marker4 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.48198,39.873608],
+
+          });
+          marker4.setMap(map);
+        }
+        if (x17 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+          if (marker3) {
+            marker3.setMap(null);
+            marker3 = null;
+          }
+          if (marker4) {
+            marker4.setMap(null);
+            marker4 = null;
+          }
+        }
+      }
+
+
+
+      x18=0;
+      function kaibi18() {
+        x18 += 1;
+        if (x18 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.48322,39.876119],
+
+          });
+          marker1.setMap(map);
+        }
+        if (x18 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+        }
+      }
+
+
+
+      x19=0;
+      function kaibi19() {
+        x19 += 1;
+        if (x19 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.484565,39.873079],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.484895,39.873036],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x19 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+
+
+      x20=0;
+      function kaibi20() {
+        x20 += 1;
+        if (x20 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.484708,39.875653],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.486387,39.87534],
+
+          });
+          marker2.setMap(map);
+          marker3 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.485078,39.874447],
+
+          });
+          marker3.setMap(map);
+          marker4 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.485802,39.874776],
+
+          });
+          marker4.setMap(map);
+          marker5 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.484021,39.875566],
+
+          });
+          marker5.setMap(map);
+          marker6= new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.485083,39.87443],
+
+          });
+          marker6.setMap(map);
+        }
+        if (x20 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+          if (marker3) {
+            marker3.setMap(null);
+            marker3 = null;
+          }
+          if (marker4) {
+            marker4.setMap(null);
+            marker4 = null;
+          }
+          if (marker5) {
+            marker5.setMap(null);
+            marker5 = null;
+          }
+          if (marker6) {
+            marker6.setMap(null);
+            marker6 = null;
+          }
+        }
+      }
+
+
+
+      x21=0;
+      function kaibi21() {
+        x21 += 1;
+        if (x21 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.486435,39.873763],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.486092,39.873187],
+
+          });
+          marker2.setMap(map);
+          marker3 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.485802,39.873006],
+
+          });
+          marker3.setMap(map);
+        }
+        if (x21 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+          if (marker3) {
+            marker3.setMap(null);
+            marker3 = null;
+          }
+        }
+      }
+
+      x22=0;
+      function kaibi22() {
+        x22 += 1;
+        if (x22 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.483651,39.877942],
+
+          });
+          marker1.setMap(map);
+          marker2 = new AMap.Marker({ icon:'../../js/dongtai.png',
+            position: [116.483614,39.877328],
+
+          });
+          marker2.setMap(map);
+        }
+        if (x22 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+          if (marker2) {
+            marker2.setMap(null);
+            marker2 = null;
+          }
+        }
+      }
+
+
+      x23=0;
+      function kaibi23() {
+        x23 += 1;
+        if (x23 % 2 == 1) {
+
+          marker1 = new AMap.Marker({ icon: '../../js/dongtai.png',
+            position: [116.487927,39.874459],
+
+          });
+          marker1.setMap(map);
+        }
+        if (x23 % 2 == 0) {
+
+          if (marker1) {
+            marker1.setMap(null);
+            marker1 = null;
+          }
+        }
+      }
+
+      AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],function(){
+        map.addControl(new AMap.ToolBar());
+        map.addControl(new AMap.Scale());
+
+      })
+
+    </script>
+    <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+   <footer class="main-footer">
+    <div class="pull-right d-none d-sm-inline-block">
+        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+		  <li class="nav-item">
+			<a class="nav-link" href="javascript:void(0)">FAQ</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="#">Purchase Now</a>
+		  </li>
+		</ul>
+    </div>
+	  &copy; 2018 <a href="https://www.multipurposethemes.com/">Multi-Purpose Themes</a>. All Rights Reserved.
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-light">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="nav-item"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li class="nav-item"><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-cog fa-spin"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-birthday-cake bg-danger"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Admin Birthday</h4>
+
+                <p>Will be July 24th</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-user bg-warning"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Jhone Updated His Profile</h4>
+
+                <p>New Email : jhone_doe@demo.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-envelope-o bg-info"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Disha Joined Mailing List</h4>
+
+                <p>disha@demo.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-file-code-o bg-success"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Code Change</h4>
+
+                <p>Execution time 15 Days</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Web Design
+                <span class="label label-danger pull-right">40%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 40%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Update Data
+                <span class="label label-success pull-right">75%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-success" style="width: 75%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Order Process
+                <span class="label label-warning pull-right">89%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-warning" style="width: 89%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Development 
+                <span class="label label-primary pull-right">72%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-primary" style="width: 72%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <input type="checkbox" id="report_panel" class="chk-col-grey" >
+			<label for="report_panel" class="control-sidebar-subheading ">Report panel usage</label>
+
+            <p>
+              general settings information
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <input type="checkbox" id="allow_mail" class="chk-col-grey" >
+			<label for="allow_mail" class="control-sidebar-subheading ">Mail redirect</label>
+
+            <p>
+              Other sets of options are available
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <input type="checkbox" id="expose_author" class="chk-col-grey" >
+			<label for="expose_author" class="control-sidebar-subheading ">Expose author name</label>
+
+            <p>
+              Allow the user to show his name in blog posts
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+          <div class="form-group">
+            <input type="checkbox" id="show_me_online" class="chk-col-grey" >
+			<label for="show_me_online" class="control-sidebar-subheading ">Show me as online</label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <input type="checkbox" id="off_notifications" class="chk-col-grey" >
+			<label for="off_notifications" class="control-sidebar-subheading ">Turn off notifications</label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">              
+              <a href="javascript:void(0)" class="text-red margin-r-5"><i class="fa fa-trash-o"></i></a>
+              Delete chat history
+            </label>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  
+  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<script src="../../../assets/vendor_components/jquery/dist/jquery.min.js"></script>
+	
+	<!-- popper -->
+	<script src="../../../assets/vendor_components/popper/dist/popper.min.js"></script>
+	
+	<!-- Bootstrap 4.0-->
+	<script src="../../../assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<!-- SlimScroll -->
+	<script src="../../../assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+	
+	<!-- FastClick -->
+	<script src="../../../assets/vendor_components/fastclick/lib/fastclick.js"></script>
+	
+	<!-- Sparkline -->
+	<script src="../../../assets/vendor_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+	
+	<!-- peity -->
+	<script src="../../../assets/vendor_components/jquery.peity/jquery.peity.js"></script>
+	
+	<!-- easypiechart -->
+	<script type="text/javascript" src="../../../assets/vendor_components/easypiechart/dist/jquery.easypiechart.js"></script>
+	
+	<!-- Fab Admin App -->
+	<script src="../../js/template.js"></script>
+	
+	<!-- Fab Admin for demo purposes -->
+	<script src="../../js/demo.js"></script>
+	
+	<!-- chart-widgets -->
+	<script src="../../js/pages/chart-widgets.js"></script>
+	
+	<script>
+		
+	</script>
+	
+</body>
+</html>
