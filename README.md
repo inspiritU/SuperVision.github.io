@@ -1,5 +1,3 @@
-# Bikesharing-Management.github.io
-2017.03 - 2019.05
 # 1 Software Overview
 https://github.com/inspiritU/Bikesharing-Management.github.io/assets/122147020/dc97a897-a635-459a-a753-9185cb3c4080
 
