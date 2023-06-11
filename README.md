@@ -1,6 +1,8 @@
 # Bikesharing-Management.github.io
 2017.03 - 2019.05
 # 1 Software Overview
+https://github.com/inspiritU/Bikesharing-Management.github.io/assets/122147020/dc97a897-a635-459a-a753-9185cb3c4080
+
 ## 1.1 Software Purpose
 **SuperVision**  is an intelligent supervision platform for shared bicycles that integrates data collection, big data analysis, real-time monitoring, independent management of parking spots, and comprehensive enterprise management. The platform aims to deeply explore the characteristics of shared bicycle travel in terms of time, space, season, climate, etc., by combining big data analysis and visualization technology. It utilizes cross-analysis to obtain indicators such as the deployment volume of bicycles in different regions and brands, standardized parking rates, and flow rates. The analysis results are presented in visual forms, including real-time heat maps, interactive parking spot opening and closing plans, visual charts, and quarterly reports sent to enterprises. This platform has the advantages of real-time supervision, high visuality, ease of operation, and strong compatibility. Compared to traditional manual management models for community shared bicycles, this platform can effectively improve management efficiency, enhance service effectiveness, significantly reduce management costs, and provide a new choice for unified supervision of multi-brand shared bicycles within communities.
 
